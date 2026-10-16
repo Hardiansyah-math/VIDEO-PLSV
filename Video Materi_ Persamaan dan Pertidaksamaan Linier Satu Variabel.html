@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Video Materi: Persamaan dan Pertidaksamaan Linier Satu Variabel</title>
+<style>
+:root{--bg:#f4f6fb;--fg:#1c2333;--card:#fff;--acc:#2f6fed;--hot:#e8590c;--mut:#5b6478;--ok:#2b9348;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1320;--fg:#eef1f8;--card:#1a2236;--acc:#6ea0ff;--hot:#ff9150;--mut:#a3adc2;--ok:#5bd17f}}
+:root[data-theme="dark"]{--bg:#0e1320;--fg:#eef1f8;--card:#1a2236;--acc:#6ea0ff;--hot:#ff9150;--mut:#a3adc2;--ok:#5bd17f}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;display:flex;flex-direction:column;overflow:hidden}
+#stage{flex:1;display:flex;align-items:center;justify-content:center;position:relative;padding:12px;min-height:0;overflow-y:auto}
+.sc{width:min(880px,100%);text-align:center;animation:in .6s}
+@keyframes in{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+h1{font-size:clamp(26px,5.5vw,48px);margin:.2em 0;line-height:1.15}
+h2{font-size:clamp(22px,4.2vw,36px);margin:.2em 0 .5em;color:var(--acc)}
+p{font-size:clamp(16px,2.6vw,22px);margin:.4em 0;color:var(--mut)}
+.big{font-size:clamp(24px,5vw,44px);font-weight:700;margin:.3em 0;color:var(--fg)}
+.s{opacity:0;transform:translateY(14px);transition:opacity .6s,transform .6s}
+.s.on{opacity:1;transform:none}
+.row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.card{background:var(--card);border-radius:16px;padding:14px 18px;flex:1 1 220px;box-shadow:0 2px 10px rgba(0,0,0,.12);text-align:left}
+.card b{color:var(--acc)}
+.ok{color:var(--ok);font-weight:700}.hot{color:var(--hot);font-weight:700}
+.nl{width:min(520px,100%);height:auto}
+.nl .ln{stroke:var(--fg);stroke-width:2}.nl .tx{fill:var(--mut);font-size:13px}
+.nl .ray{stroke:var(--hot);stroke-width:6;stroke-linecap:round}
+.nl .dot{fill:var(--hot);stroke:var(--hot);stroke-width:3}.nl .dot.o{fill:var(--bg)}
+#cap{padding:8px 16px;font-size:clamp(13px,2.2vw,17px);text-align:center;color:var(--fg);background:var(--card);min-height:3.4em;max-height:6.5em;overflow:auto;line-height:1.4}
+#bar{height:4px;background:var(--acc);width:0;transition:width .5s}
+#ctl{display:flex;gap:8px;align-items:center;justify-content:center;padding:8px;flex-wrap:wrap}
+button{font:inherit;border:0;border-radius:999px;padding:8px 16px;background:var(--acc);color:#fff;cursor:pointer;font-size:16px}
+button.g{background:var(--card);color:var(--fg);box-shadow:0 1px 6px rgba(0,0,0,.18)}
+#cnt{color:var(--mut);font-size:14px;min-width:54px;text-align:center}
+#ov{position:absolute;inset:0;display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:center;background:var(--bg);z-index:5;text-align:center;padding:20px}
+#ov button{font-size:22px;padding:14px 30px}
+</style></head>
+<body>
+<div id="stage"></div>
+<div id="bar"></div>
+<div id="cap"></div>
+<div id="ctl">
+<button class="g" id="pv" aria-label="Sebelumnya">⏮</button>
+<button id="pp" aria-label="Putar atau jeda">▶ Putar</button>
+<button class="g" id="nx" aria-label="Berikutnya">⏭</button>
+<span id="cnt"></span>
+<button class="g" id="nr">🔇 Narasi: mati</button>
+</div>
+<script>
+const NL=(p,f,d)=>{const x=v=>20+v*40;let t='';for(let v=0;v<=8;v++)t+=`<line class="ln" x1="${x(v)}" x2="${x(v)}" y1="26" y2="38"/><text class="tx" x="${x(v)}" y="56" text-anchor="middle">${v}</text>`;return `<svg viewBox="0 0 360 66" class="nl"><line class="ln" x1="20" x2="340" y1="32" y2="32"/>${t}<line class="ray" x1="${x(p)}" x2="${d>0?340:20}" y1="32" y2="32"/><circle class="dot${f?'':' o'}" cx="${x(p)}" cy="32" r="7"/></svg>`};
+const sc=[
+{n:"Halo teman-teman! Hari ini kita belajar persamaan dan pertidaksamaan linier satu variabel. Tenang, santai saja. Kita mulai dari tebak-tebakan angka.",
+b:`<h1>Persamaan &amp; Pertidaksamaan Linier Satu Variabel</h1><p>Matematika Kelas VIII · Bab 3</p><div class="s big">Santai tapi bermakna 😎</div><div class="s"><p>Kita mulai dari tebak-tebakan angka…</p></div>`},
+{n:"Coba tebak! Aku memikirkan satu bilangan. Kalau dikali tiga lalu dikurangi lima, hasilnya sepuluh. Kita sebut bilangan itu x, si kotak misteri. Tambah lima di kedua sisi, lalu bagi tiga, ketemu: x sama dengan lima. Mencari nilai yang belum diketahui, itulah inti bab ini.",
+b:`<h2>Tebak Angka 🎲</h2><p>“Dikali 3, dikurangi 5, hasilnya 10. Bilangan apa?”</p><div class="s big">3x − 5 = 10</div><div class="s big">3x = 15 <span style="color:var(--mut)">(tambah 5 di kedua sisi)</span></div><div class="s big">x = <span class="ok">5</span> ✔</div>`},
+{n:"Ada dua jenis kalimat. Kalimat tertutup nilainya jelas, benar atau salah. Kalimat terbuka masih punya variabel yang belum diketahui, seperti x tambah empat sama dengan dua puluh. Kalau x diganti enam belas, kalimatnya jadi benar. Himpunan penyelesaiannya adalah enam belas.",
+b:`<h2>Kalimat Terbuka vs Tertutup</h2><div class="row"><div class="card s"><b>Tertutup</b><p>5(2) − 3 = 7</p><p class="ok">Nilainya jelas: benar</p></div><div class="card s"><b>Terbuka</b><p>x + 4 = 20</p><p class="hot">Ada x yang belum diketahui</p></div></div><div class="s big">x = 16 → 16 + 4 = 20 ✔<br>HP = {16}</div>`},
+{n:"Persamaan itu seperti timbangan yang seimbang. Dua balok ditambah empat kelereng sama dengan delapan kelereng. Kurangi empat kelereng di kedua sisi, timbangan tetap seimbang. Tinggal dua balok sama dengan empat kelereng, jadi satu balok sama dengan dua. Aturan emasnya: apa pun yang kamu lakukan di kiri, lakukan juga di kanan.",
+b:`<h2>Persamaan = Timbangan ⚖️</h2><div class="s big">🟩🟩 ⚪⚪⚪⚪ = ⚪⚪⚪⚪⚪⚪⚪⚪<br><span style="font-size:.5em;color:var(--mut)">2x + 4 = 8</span></div><div class="s big">🟩🟩 = ⚪⚪⚪⚪<br><span style="font-size:.5em;color:var(--mut)">kurangi 4 di kedua sisi</span></div><div class="s big">🟩 = ⚪⚪ → x = <span class="ok">2</span></div><div class="s card"><b>✨ Aturan emas:</b> apa pun yang dilakukan di kiri, lakukan juga di kanan.</div>`},
+{n:"Sekarang kita selesaikan empat x tambah sembilan sama dengan dua puluh sembilan. Kurangi sembilan di kedua ruas, jadi empat x sama dengan dua puluh. Bagi empat, hasilnya x sama dengan lima. Jangan lupa dicek: empat kali lima tambah sembilan, sama dengan dua puluh sembilan. Benar!",
+b:`<h2>Menyelesaikan PLSV</h2><div class="s big">4x + 9 = 29</div><div class="s big">4x = 20 <span style="font-size:.5em;color:var(--mut)">(kurangi 9)</span></div><div class="s big">x = <span class="ok">5</span> <span style="font-size:.5em;color:var(--mut)">(bagi 4)</span></div><div class="s card"><b>Cek:</b> 4 × 5 + 9 = 29 ✔ Ruas kiri = ruas kanan</div>`},
+{n:"Sekarang kenalan dengan pertidaksamaan. Di jalan tol ada rambu kecepatan: minimal enam puluh, maksimal seratus kilometer per jam. Ditulis: enam puluh kurang dari sama dengan v kurang dari sama dengan seratus. Ingat, paling banyak dan paling sedikit itu termasuk batasnya.",
+b:`<h2>Pertidaksamaan = Batasan 🚦</h2><div class="s big">Rambu tol: min 60, maks 100 km/jam</div><div class="s big">60 ≤ v ≤ 100</div><div class="row s"><div class="card"><b>&lt;</b> kurang dari<br><b>&gt;</b> lebih dari</div><div class="card"><b>≤</b> paling banyak, maksimal<br><b>≥</b> paling sedikit, minimal</div></div>`},
+{n:"Himpunan penyelesaian pertidaksamaan digambar di garis bilangan. Bulatan penuh artinya angka itu termasuk, seperti x lebih dari sama dengan empat. Bulatan kosong artinya tidak termasuk, seperti x lebih dari empat. Panahnya menunjukkan arah penyelesaian.",
+b:`<h2>Garis Bilangan</h2><div class="s"><div class="big">x ≥ 4 <span class="ok" style="font-size:.55em">● termasuk</span></div>${NL(4,true,1)}</div><div class="s"><div class="big">x &gt; 4 <span class="hot" style="font-size:.55em">○ tidak termasuk</span></div>${NL(4,false,1)}</div>`},
+{n:"Ini bagian yang sering bikin terpeleset! Empat kurang dari tujuh itu benar. Kalau kedua sisi dikali negatif dua, hasilnya negatif delapan lebih dari negatif empat belas. Tandanya berbalik! Jadi kalau dikali atau dibagi bilangan negatif, balik tanda pertidaksamaannya. Contoh: negatif dua x lebih dari enam, dibagi negatif dua, jadi x kurang dari negatif tiga.",
+b:`<h2>Awas, Tanda Berbalik! 🔄</h2><div class="s big">4 &lt; 7</div><div class="s big">× (−2) → −8 <span class="hot">&gt;</span> −14</div><div class="s card"><b>Aturan:</b> dikali atau dibagi bilangan <b>negatif</b> → tanda dibalik.</div><div class="s big">−2x &gt; 6 → x <span class="hot">&lt;</span> −3</div>`},
+{n:"Saatnya soal cerita. Humam punya uang seratus delapan puluh ribu rupiah untuk membeli jeruk, harganya lima belas ribu per kilogram. Misalkan jeruknya j kilogram. Uang yang dipakai tidak boleh lebih dari uang yang dimiliki, jadi lima belas ribu j kurang dari sama dengan seratus delapan puluh ribu. Hasilnya j kurang dari sama dengan dua belas. Humam bisa membeli paling banyak dua belas kilogram.",
+b:`<h2>Soal Cerita 🍊</h2><p>Uang Humam Rp180.000. Jeruk Rp15.000 per kg.</p><div class="s big">Misal jeruk = j kg</div><div class="s big">15.000j ≤ 180.000</div><div class="s big">j ≤ <span class="ok">12</span></div><div class="s card">Humam bisa membeli <b>paling banyak 12 kg</b> jeruk.</div>`},
+{n:"Kita rangkum. Persamaan itu soal keseimbangan, pertidaksamaan itu soal batasan. Kerjakan kiri dan kanan sama, dan periksa jawabanmu. Hati-hati dengan bilangan negatif. Belajar matematika bukan cuma mencari x, tapi melatih kita berpikir runtut dan teliti. Kamu pasti bisa!",
+b:`<h2>Rangkuman 🌟</h2><div class="row"><div class="card s"><b>Persamaan</b><br>Soal keseimbangan. Kiri = kanan.</div><div class="card s"><b>Pertidaksamaan</b><br>Soal batasan. Ada rentang jawaban.</div></div><div class="s big">Kiri-kanan sama · Cek jawaban · Negatif? Balik tanda!</div><div class="s big">Kamu pasti bisa! 💪</div>`}
+];
+const $=id=>document.getElementById(id);
+let i=0,playing=false,narr=false,timers=[],token=0;
+function clr(){token++;timers.forEach(clearTimeout);timers=[];try{speechSynthesis.cancel()}catch(e){}}
+function reveal(){document.querySelectorAll('.s').forEach(e=>e.classList.add('on'))}
+function show(k){
+  clr();i=k;const s=sc[k],tok=token;
+  $('stage').innerHTML=`<div class="sc">${s.b}</div>`;
+  $('cap').textContent=s.n;$('bar').style.width=((k+1)/sc.length*100)+'%';$('cnt').textContent=(k+1)+' / '+sc.length;
+  const st=[...document.querySelectorAll('.s')],dur=Math.max(8000,s.n.length*80);
+  if(!playing){reveal();return}
+  st.forEach((e,j)=>timers.push(setTimeout(()=>e.classList.add('on'),600+j*(dur*.7/st.length))));
+  const go=()=>{if(tok!==token)return;if(i<sc.length-1)show(i+1);else stop()};
+  if(narr&&'speechSynthesis' in window){
+    const u=new SpeechSynthesisUtterance(s.n);u.lang='id-ID';u.rate=.95;
+    u.onend=()=>timers.push(setTimeout(go,800));u.onerror=()=>timers.push(setTimeout(go,dur));
+    speechSynthesis.speak(u);timers.push(setTimeout(go,60000));
+  }else timers.push(setTimeout(go,dur+1500));
+}
+function stop(){playing=false;$('pp').textContent='▶ Putar';reveal()}
+function toggle(){
+  if(playing){playing=false;clr();reveal();$('pp').textContent='▶ Putar';return}
+  playing=true;$('pp').textContent='⏸ Jeda';show(i>=sc.length-1?0:i);
+}
+$('pp').onclick=toggle;
+$('nx').onclick=()=>show(Math.min(i+1,sc.length-1));
+$('pv').onclick=()=>show(Math.max(i-1,0));
+$('nr').onclick=()=>{narr=!narr;$('nr').textContent=narr?'🔊 Narasi: nyala':'🔇 Narasi: mati';if(playing)show(i)};
+show(0);
+const ov=document.createElement('div');ov.id='ov';
+ov.innerHTML='<h1>🎬 Video Materi</h1><p>Persamaan &amp; Pertidaksamaan Linier Satu Variabel · ±3 menit</p><button id="go">▶ Putar Video</button><p>Tips: aktifkan “Narasi” agar dibacakan suara.</p>';
+$('stage').appendChild(ov);
+$('go').onclick=()=>{ov.remove();toggle()};
+</script>
+</body></html>
